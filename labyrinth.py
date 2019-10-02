@@ -12,6 +12,17 @@ import pygame
 
 
 class Labyrinth:
-    def __init__(self):
-        pass
+
+    with open("labyrinth_sketch.txt") as file:
+        #Refacto
+        labyrinth_structure = [[sprite for sprite in line if sprite != "\n"]for line in file]
+        """
+        labyrinth_structure = []
+        for line in file:
+            map_line = []
+            for sprite in line:
+                if sprite != '\n':
+                    map_line.append(sprite)
+            labyrinth_structure.append(map_line)
+        """
 
