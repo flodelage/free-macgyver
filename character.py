@@ -15,9 +15,6 @@ class Macgyver(Character):
     def __init__(self, x, y):
         Character.__init__(self, x, y)
 
-    def move(self):
-        pass
-
 
 class Guard(Character):
     def __init__(self, x, y):
