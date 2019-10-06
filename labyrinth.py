@@ -6,21 +6,30 @@ import pygame
 
 
 class Labyrinth:
-    def __init__(self, file_map):
-        with open(file_map) as file:
+    """
+    Class which creates a map structure from a file
+    """
+    def __init__(self, map_file):
+        with open(map_file) as file:
             self.labyrinth_structure = [[sprite for sprite in line if sprite != "\n"]for line in file]
 
-    def find_character(self, char):
+    def find_letter(self, letter):
+        """
+        Finds a letter in the map file and return its position in a tuple
+        """
         x = 0
         y = 0
         for line in self.labyrinth_structure:
             x = 0
             for c in line:
-                if c == char:
+                if c == letter:
                     return (x, y)
                 x += 1
             y += 1
 
     def display(self):
+        """
+        Displays the map by removing unnecessary characters (, "" [])
+        """
         for line in self.labyrinth_structure:
             print("".join(line))

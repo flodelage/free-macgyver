@@ -15,11 +15,19 @@ class GamePersona:
 
 
 class PlayerCharacter(GamePersona):
+    """
+    Class which creates Player Character
+    """
     def __init__(self, x, y):
         GamePersona.__init__(self, x, y)
 
     def move(self):
-        event = input("utiliser z q s d pour se déplacer")
+        """
+        Defines the movement of the Player Character.
+        Gets the event specified in type(str) and
+        return the desired position in a tuple
+        """
+        event = input("Use Z, Q, S, or D to move your character")
         if event == "q":
             return (self.x - 1, self.y)
         elif event == "d":
@@ -31,5 +39,8 @@ class PlayerCharacter(GamePersona):
 
 
 class NonPlayerCharacter(GamePersona):
+    """
+    Class which creates Non Player Character
+    """
     def __init__(self, pos_x, pos_y):
         GamePersona.__init__(self, pos_x, pos_y)

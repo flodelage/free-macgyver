@@ -8,16 +8,22 @@ from game_personas import PlayerCharacter, NonPlayerCharacter
 
 
 class GameManager:
+    """
+    Class which manages the functioning of the game
+    """
     def __init__(self):
         self.labyrinth = Labyrinth("labyrinth_sketch.txt")
-        pos = self.labyrinth.find_character("m")
+        pos = self.labyrinth.find_letter("m")
         self.macgyver = PlayerCharacter(pos[0], pos[1])
-        pos = self.labyrinth.find_character("g")
-        self.guard = NonPlayerCharacter(pos[0], pos[1])
+        pos = self.labyrinth.find_letter("g")
+        self.guardian = NonPlayerCharacter(pos[0], pos[1])
 
 
 
     def start(self):
+        """
+        Runs the game 
+        """
         while True:
     #afficher carte
             self.labyrinth.display()
