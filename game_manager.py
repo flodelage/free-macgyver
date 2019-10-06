@@ -13,10 +13,20 @@ class GameManager:
     """
     def __init__(self):
         self.labyrinth = Labyrinth("labyrinth_sketch.txt")
-        pos = self.labyrinth.find_letter("m")
-        self.macgyver = PlayerCharacter(pos[0], pos[1])
-        pos = self.labyrinth.find_letter("g")
-        self.guardian = NonPlayerCharacter(pos[0], pos[1])
+        """
+        Creates Map instance
+        """
+        position = self.labyrinth.find_letter("m")
+        """
+        Finds macgyver, represented by a letter (str)
+        and return its coordinates x, y (tuple)
+        """
+        self.macgyver = PlayerCharacter("MacGyver", position[0], position[1])
+        """
+        Creates MacGyver instance and assigns its coordinates x, y from var position (tuple)
+        """
+        position = self.labyrinth.find_letter("g")
+        self.guardian = NonPlayerCharacter("Guardian", position[0], position[1])
 
 
 

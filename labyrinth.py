@@ -15,7 +15,7 @@ class Labyrinth:
 
     def find_letter(self, letter):
         """
-        Finds a letter in the map file and return its position in a tuple
+        Finds a letter (str) in the map file and return its coordinates x, y (tuple)
         """
         x = 0
         y = 0
