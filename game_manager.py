@@ -29,6 +29,12 @@ class GameManager:
         """
         position = self.labyrinth.find_letter("g")
         self.guardian = NonPlayerCharacter("Guardian", position[0], position[1])
+        empty_cases = self.labyrinth.list_letter(" ")
+        items = [Item("needle", "n", 0, 0), Item("ether", "e", 0, 0), Item("tube", "t", 0, 0)]
+        for item in items:
+            new_position = random.choice(empty_cases)
+            item.set_position(new_position[0], new_position[1])
+            self.labyrinth.replace_letter(item.y, item.x, item.letter)
 
     def start(self):
         """
