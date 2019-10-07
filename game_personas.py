@@ -16,9 +16,10 @@ class PlayerCharacter(GamePersona):
     """
     Class which creates Player Character
     """
-    def __init__(self, name, y, x):
+    def __init__(self, name, y, x, inventory):
         GamePersona.__init__(self, name, y, x)
-
+        self.inventory = []
+        
     def move(self):
         """
         Defines the movement of the Player Character.
@@ -38,6 +39,10 @@ class PlayerCharacter(GamePersona):
     def set_position(self, y, x):
         self.x = x
         self.y = y
+
+    def loot_item(self, item_letter):
+        self.inventory.append(item_letter)
+        
 
 
 class NonPlayerCharacter(GamePersona):

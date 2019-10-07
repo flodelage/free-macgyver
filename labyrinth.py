@@ -54,7 +54,6 @@ class Labyrinth:
                     position_list.append((y, x))
                 x += 1
             y += 1
-
         return position_list
 
 
