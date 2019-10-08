@@ -42,8 +42,13 @@ class PlayerCharacter(GamePersona):
 
     def loot_item(self, item_letter):
         self.inventory.append(item_letter)
-        
 
+    def full_inventory(self, inventory, items):
+        if len(inventory) == len(items):
+            return True
+        else:
+            return False
+        
 
 class NonPlayerCharacter(GamePersona):
     """

@@ -40,11 +40,11 @@ class GameManager:
         """
         Defines labyrinth empty squares
         """
-        items = [Item("needle", "n", 0, 0), Item("ether", "e", 0, 0), Item("tube", "t", 0, 0)]
+        self.items = [Item("needle", "n", 0, 0), Item("ether", "e", 0, 0), Item("tube", "t", 0, 0)]
         """
         Creates the 3 items instances
         """
-        for item in items:
+        for item in self.items:
             new_position = random.choice(empty_squares)
             item.set_position(new_position[0], new_position[1])
             self.labyrinth.replace_letter(item.y, item.x, item.letter)
@@ -56,9 +56,8 @@ class GameManager:
         """
         Runs the game 
         """
-      
-        while True:
-            print(self.macgyver.inventory)
+        run = True
+        while run == True:
             self.labyrinth.display()
             """
             Displays map to user
@@ -79,6 +78,18 @@ class GameManager:
                 self.labyrinth.replace_letter(position_before_movement[0], position_before_movement[1], " ")
                 self.macgyver.set_position(requested_position[0], requested_position[1])
                 self.macgyver.loot_item(requested_map_letter)
+            elif requested_map_letter == "g":
+                if self.macgyver.full_inventory(self.macgyver.inventory, self.items) == True:
+                    self.labyrinth.replace_letter(requested_position[0], requested_position[1], "m")
+                    self.labyrinth.replace_letter(position_before_movement[0], position_before_movement[1], " ")
+                    self.macgyver.set_position(requested_position[0], requested_position[1])
+                    print("You slept the Guardian !")
+                    print("YOU WIN !")
+                    run = False
+                elif self.macgyver.full_inventory(self.macgyver.inventory, self.items) == False:
+                    print("The Guardian is still awake !")
+                    print("YOU LOSE !")
+                    run = False
             else:
                 pass
 
