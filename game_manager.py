@@ -27,13 +27,13 @@ class GameManager:
         and return its coordinates y, x (int) in a (tuple) """
         self.guardian = NonPlayerCharacter("Guardian", position[0], position[1])
         """ Creates NonPlayerCharacter instance and assigns its coordinates x, y (int) from var position """
-        empty_squares = self.labyrinth.list_letter(FLOOR_LETTER)
+        floor_squares = self.labyrinth.list_letter(FLOOR_LETTER)
         """ Defines labyrinth empty squares """
         self.items = [Item("needle", "n", 0, 0), Item("ether", "e", 0, 0), Item("tube", "t", 0, 0)]
         """ Creates the 3 items instances """
         for item in self.items:
-            new_position = random.choice(empty_squares)
-            item.set_position(new_position[0], new_position[1])
+            random_position = random.choice(floor_squares)
+            item.set_position(random_position[0], random_position[1])
             self.labyrinth.replace_letter(item.y, item.x, item.letter)
         """ Defines items random positions at the launch of the game """
      
@@ -54,7 +54,7 @@ class GameManager:
                 self.labyrinth.replace_letter(requested_position[0], requested_position[1], MACGYVER_LETTER)
                 self.labyrinth.replace_letter(position_before_movement[0], position_before_movement[1], FLOOR_LETTER)
                 self.macgyver.set_position(requested_position[0], requested_position[1])
-            if requested_map_letter == "n" or requested_map_letter == "e" or requested_map_letter == "t":
+            if requested_map_letter == NEEDLE_LETTER or requested_map_letter == ETHER_LETTER or requested_map_letter == TUBE_LETTER:
                 self.macgyver.loot_item(requested_map_letter)
             elif requested_map_letter == GUARDIAN_LETTER:
                 if self.macgyver.full_inventory(self.items) == True:

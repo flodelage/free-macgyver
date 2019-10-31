@@ -47,8 +47,9 @@ class PlayerCharacter(GamePersona):
                 next
 
     def set_position(self, y, x):
-        self.x = x
         self.y = y
+        self.x = x
+        
 
     def loot_item(self, item_letter):
         self.inventory.append(item_letter)

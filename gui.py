@@ -2,46 +2,49 @@
 #! /usr/bin/env python3.7
 # coding: utf-8
 
-from models.game_personas import PlayerCharacter, NonPlayerCharacter
+import pygame
+from pygame.locals import *
 
+from models.game_personas import PlayerCharacter, NonPlayerCharacter
 from models.sprite import MySprite
 from models.labyrinth import Labyrinth
 from constants import *
-
-import pygame
-from pygame.locals import *
 
 
 class Gui:
     def __init__(self):
         pygame.init()
         pygame.font.init()
+        # set Labyrinth instance
         self.labyrinth = Labyrinth(MAP_FILE)
+        # set game window
         self.window = pygame.display.set_mode((WINDOW_SIDE, WINDOW_SIDE))
-        self.window_title = pygame.display.set_caption(WINDOW_TITLE)
-        self.window_icon = pygame.image.load(ICON_IMG).convert_alpha()
-        self.wall_img = pygame.image.load(WALL_IMG).convert_alpha()
-        self.floor_img = pygame.image.load(FLOOR_IMG).convert_alpha()
+        # set images 
         self.macgyver_img = pygame.image.load(PLAYER_CHARACTER_IMG).convert_alpha()
         self.guardian_img = pygame.image.load(NON_PLAYER_CHARACTER_IMG).convert_alpha()
-        self.clock = pygame.time.Clock()
+        self.wall_img = pygame.image.load(WALL_IMG).convert_alpha()
+        self.floor_img = pygame.image.load(FLOOR_IMG).convert_alpha()
+        # set Sprite instances
         self.player = MySprite(self.macgyver_img)
         self.non_player = MySprite(self.guardian_img)
+        # set Sprite instances in sprite Group() class
         self.wall_sprites_list = pygame.sprite.Group()
         self.floor_sprites_list = pygame.sprite.Group()
         self.characters_sprites_list = pygame.sprite.Group()
+        # set pygame time Clock()
+        self.clock = pygame.time.Clock()
 
-    def draw_characters(self):
+    def set_characters(self):
         macgyver_position = self.labyrinth.find_letter(MACGYVER_LETTER)
         guardian_position = self.labyrinth.find_letter(GUARDIAN_LETTER)
-        macgyver = PlayerCharacter("MacGyver", macgyver_position[0], macgyver_position[1], [])
+        self.macgyver = PlayerCharacter("MacGyver", macgyver_position[0], macgyver_position[1], [])
         self.player.rect.x = macgyver_position[1] * SPRITE_SIZE
         self.player.rect.y = macgyver_position[0] * SPRITE_SIZE
         self.non_player.rect.x = guardian_position[1] * SPRITE_SIZE
         self.non_player.rect.y = guardian_position[0] * SPRITE_SIZE
         self.characters_sprites_list.add(self.player, self.non_player)
 
-    def draw_walls(self):
+    def set_walls(self):
         walls = self.labyrinth.list_letter(WALL_LETTER)
         for wall in walls:
             wall_sprite = MySprite(self.wall_img)
@@ -49,7 +52,7 @@ class Gui:
             wall_sprite.rect.y = wall[0] * SPRITE_SIZE
             self.wall_sprites_list.add(wall_sprite)
         
-    def draw_floor(self):
+    def set_floor(self):
         floors = self.labyrinth.list_letter(FLOOR_LETTER)
         for floor in floors:
             floor_sprite = MySprite(self.floor_img)
@@ -58,24 +61,40 @@ class Gui:
             self.floor_sprites_list.add(floor_sprite)
 
     def launch_game(self):
-        self.draw_walls()
-        self.draw_floor()
-        self.draw_characters()
+        self.set_walls()
+        self.set_floor()
+        self.set_characters()
+
         while True:
             requested_position = None
+            position_before_movement = (self.macgyver.y, self.macgyver.x) 
+
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     return
 
+                if event.type == pygame.KEYDOWN:
+                    #retourne un tuple de coordonnées
+                    requested_position = self.macgyver.move_gui(event.key)
+                    if requested_position is not None:
+                        # retourne la lettre présente à la position souhaitée
+                        requested_map_letter = self.labyrinth.retrieve_letter(requested_position[0], requested_position[1])
+                        if requested_map_letter != WALL_LETTER:
+                            self.labyrinth.replace_letter(requested_position[0], requested_position[1], MACGYVER_LETTER)
+                            self.labyrinth.replace_letter(position_before_movement[0], position_before_movement[1], FLOOR_LETTER)
+                            self.player.move(requested_position)
+                            self.macgyver.set_position(requested_position[0], requested_position[1])
+                            self.set_floor()
 
-            self.wall_sprites_list.draw(self.window)
-            self.floor_sprites_list.draw(self.window)
-            self.characters_sprites_list.draw(self.window)
+
+                self.wall_sprites_list.draw(self.window)
+                self.floor_sprites_list.draw(self.window)
+                self.characters_sprites_list.draw(self.window)
+                #Refresh window
+                pygame.display.flip()
+                self.clock.tick(60)
             
-            #Refresh window
-            pygame.display.flip()
-            self.clock.tick(60)
             
 
 
