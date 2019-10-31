@@ -2,6 +2,8 @@
 #! /usr/bin/env python3.7
 # coding: utf-8
 
+import random
+
 import pygame
 from pygame.locals import *
 
@@ -24,6 +26,9 @@ class Gui:
         self.guardian_img = pygame.image.load(NON_PLAYER_CHARACTER_IMG).convert_alpha()
         self.wall_img = pygame.image.load(WALL_IMG).convert_alpha()
         self.floor_img = pygame.image.load(FLOOR_IMG).convert_alpha()
+        self.needle_img = pygame.image.load(NEEDLE_IMG).convert_alpha()
+        self.ether_img = pygame.image.load(ETHER_IMG).convert_alpha()
+        self.tube_img = pygame.image.load(TUBE_IMG).convert_alpha()
         # set Sprite instances
         self.player = MySprite(self.macgyver_img)
         self.non_player = MySprite(self.guardian_img)
@@ -31,6 +36,7 @@ class Gui:
         self.wall_sprites_list = pygame.sprite.Group()
         self.floor_sprites_list = pygame.sprite.Group()
         self.characters_sprites_list = pygame.sprite.Group()
+        self.items_sprites_list = pygame.sprite.Group()
         # set pygame time Clock()
         self.clock = pygame.time.Clock()
 
@@ -60,9 +66,21 @@ class Gui:
             floor_sprite.rect.y = floor[0] * SPRITE_SIZE
             self.floor_sprites_list.add(floor_sprite)
 
+    def set_items(self):
+        needle_sprite = MySprite(self.needle_img)
+        ether_sprite = MySprite(self.ether_img)
+        tube_sprite = MySprite(self.tube_img)
+        floor_squares = self.labyrinth.list_letter(FLOOR_LETTER)
+        self.items_sprites_list.add(needle_sprite, ether_sprite, tube_sprite)
+        for item in self.items_sprites_list:
+            random_position = random.choice(floor_squares)
+            item.rect.x = random_position[1] * SPRITE_SIZE
+            item.rect.y = random_position[0] * SPRITE_SIZE
+
     def launch_game(self):
         self.set_walls()
         self.set_floor()
+        self.set_items()
         self.set_characters()
 
         while True:
@@ -90,6 +108,7 @@ class Gui:
 
                 self.wall_sprites_list.draw(self.window)
                 self.floor_sprites_list.draw(self.window)
+                self.items_sprites_list.draw(self.window)
                 self.characters_sprites_list.draw(self.window)
                 #Refresh window
                 pygame.display.flip()
