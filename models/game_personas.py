@@ -21,7 +21,7 @@ class PlayerCharacter(GamePersona):
     def set_position(self, y, x):
         self.y = y
         self.x = x
-        
+
     def move_gui(self, key):
         if key == K_RIGHT:
             return (self.y, self.x + 1)

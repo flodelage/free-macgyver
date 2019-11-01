@@ -28,14 +28,15 @@ class GameManager:
         self.guardian = NonPlayerCharacter("Guardian", position[0], position[1])
         """ Creates NonPlayerCharacter instance and assigns its coordinates x, y (int) from var position """
         self.items = [Item("needle", "n", -1, -1), Item("ether", "e", -1, -1), Item("tube", "t", -1, -1)]
-        """ Creates the 3 items instances """
         floor_squares = self.labyrinth.list_letter(FLOOR_LETTER)
-        """ Defines labyrinth empty squares """
-        for item in self.items:
-            random_position = random.choice(floor_squares)
-            item.set_position(random_position[0], random_position[1])
-            self.labyrinth.replace_letter(item.y, item.x, item.letter)
-        """ Defines items random positions at the launch of the game """
+        items_positions = []
+        while len(items_positions) != len(self.items):
+            for item in self.items:
+                random_position = random.choice(floor_squares)
+                item.set_position(random_position[0], random_position[1])
+                self.labyrinth.replace_letter(item.y, item.x, item.letter)
+                new_item_position = (item.y, item.x)
+                if new_item_position not in items_positions : items_positions.append(new_item_position)
      
 
     def start(self):

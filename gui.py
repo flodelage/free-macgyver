@@ -73,15 +73,18 @@ class Gui:
         self.items = [Item("needle", "n", -1, -1), Item("ether", "e", -1, -1), Item("tube", "t", -1, -1)]
         self.items_sprites_list.add(self.needle_sprite, self.ether_sprite, self.tube_sprite)
         floor_squares = self.labyrinth.list_letter(FLOOR_LETTER)
-        for item in self.items:
-            random_position = random.choice(floor_squares)
-            item.set_position(random_position[0], random_position[1])
-            self.labyrinth.replace_letter(item.y, item.x, item.letter)
+        items_positions = []
+        while len(items_positions) != len(self.items):
+            for item in self.items:
+                random_position = random.choice(floor_squares)
+                item.set_position(random_position[0], random_position[1])
+                self.labyrinth.replace_letter(item.y, item.x, item.letter)
+                new_item_position = (item.y, item.x)
+                if new_item_position not in items_positions : items_positions.append(new_item_position)
         for sprite_id, sprite, in enumerate(self.items_sprites_list):
             item = self.items[sprite_id]
             sprite.rect.x = item.x * SPRITE_SIZE
             sprite.rect.y = item.y * SPRITE_SIZE
-
 
     def launch_game(self):
         self.set_walls()
