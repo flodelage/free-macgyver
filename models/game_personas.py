@@ -18,6 +18,10 @@ class PlayerCharacter(GamePersona):
         GamePersona.__init__(self, name, y, x)
         self.inventory = []
 
+    def set_position(self, y, x):
+        self.y = y
+        self.x = x
+        
     def move_gui(self, key):
         if key == K_RIGHT:
             return (self.y, self.x + 1)
@@ -27,7 +31,6 @@ class PlayerCharacter(GamePersona):
             return (self.y - 1, self.x)
         if key == K_DOWN:
             return (self.y + 1, self.x)
-
 
     def move(self):
         """ Defines the movement of the Player Character.
@@ -45,12 +48,7 @@ class PlayerCharacter(GamePersona):
                 return (self.y + 1, self.x)
             else:
                 next
-
-    def set_position(self, y, x):
-        self.y = y
-        self.x = x
         
-
     def loot_item(self, item_letter):
         self.inventory.append(item_letter)
 
