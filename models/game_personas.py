@@ -49,10 +49,10 @@ class PlayerCharacter(GamePersona):
             else:
                 next
         
-    def loot_item(self, item_letter):
-        self.inventory.append(item_letter)
+    def loot_item(self, item_name):
+        self.inventory.append(item_name)
 
-    def full_inventory(self, items):
+    def is_inventory_full(self, items):
         if len(self.inventory) == len(items):
             return True
         else:

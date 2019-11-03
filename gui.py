@@ -107,7 +107,6 @@ class Gui:
                     print(self.macgyver.inventory)
 
                     if requested_position is not None:
-                        # retourne la lettre présente à la position souhaitée
                         requested_map_letter = self.labyrinth.retrieve_letter(requested_position[0], requested_position[1])
                         if requested_map_letter != WALL_LETTER:
                             self.labyrinth.replace_letter(requested_position[0], requested_position[1], MACGYVER_LETTER)
@@ -115,7 +114,11 @@ class Gui:
                             self.player_sprite.move(requested_position)
                             self.macgyver.set_position(requested_position[0], requested_position[1])
                         if requested_map_letter == NEEDLE_LETTER or requested_map_letter == ETHER_LETTER or requested_map_letter == TUBE_LETTER:
-                            self.macgyver.loot_item(requested_map_letter)
+                            item_name = ""
+                            for item in self.items:
+                                if item.letter == requested_map_letter:
+                                    item_name = item.name
+                            self.macgyver.loot_item(item_name)
                         elif requested_map_letter == GUARDIAN_LETTER:
                             if self.macgyver.full_inventory(self.items_sprites_list) == True:
                                 print("You slept the Guardian !")

@@ -3,7 +3,6 @@
 # coding: utf-8
 
 
-
 class Item:
     def __init__(self, name, letter, y, x):
         self.name = name

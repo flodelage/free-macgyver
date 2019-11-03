@@ -56,12 +56,16 @@ class GameManager:
                 self.labyrinth.replace_letter(position_before_movement[0], position_before_movement[1], FLOOR_LETTER)
                 self.macgyver.set_position(requested_position[0], requested_position[1])
             if requested_map_letter == NEEDLE_LETTER or requested_map_letter == ETHER_LETTER or requested_map_letter == TUBE_LETTER:
-                self.macgyver.loot_item(requested_map_letter)
+                item_name = ""
+                for item in self.items:
+                    if item.letter == requested_map_letter:
+                        item_name = item.name
+                self.macgyver.loot_item(item_name)
             elif requested_map_letter == GUARDIAN_LETTER:
-                if self.macgyver.full_inventory(self.items) == True:
+                if self.macgyver.is_inventory_full(self.items) == True:
                     print("You slept the Guardian !")
                     print("YOU WIN !")
-                elif self.macgyver.full_inventory(self.items) == False:
+                elif self.macgyver.is_inventory_full(self.items) == False:
                     print("The Guardian is still awake !")
                     print("YOU LOSE !")
                 run = False
