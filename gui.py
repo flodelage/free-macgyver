@@ -20,7 +20,7 @@ class Gui:
         # set Labyrinth instance
         self.labyrinth = Labyrinth(MAP_FILE)
         # set game window
-        self.window = pygame.display.set_mode((WINDOW_SIDE, WINDOW_SIDE))
+        self.window = pygame.display.set_mode((WINDOW_SIDE + 200, WINDOW_SIDE))
         # set images 
         self.macgyver_img = pygame.image.load(PLAYER_CHARACTER_IMG).convert_alpha()
         self.guardian_img = pygame.image.load(NON_PLAYER_CHARACTER_IMG).convert_alpha()
@@ -42,6 +42,10 @@ class Gui:
         self.items_sprites_list = pygame.sprite.Group()
         # set pygame time Clock()
         self.clock = pygame.time.Clock()
+        self.font = pygame.font.Font(pygame.font.get_default_font(), 24)
+        text_surface = self.font.render("Inventory:", True, (255, 255, 255))
+        self.window.blit(text_surface, dest=(WINDOW_SIDE + 20, 30))
+
 
     def set_characters(self):
         macgyver_position = self.labyrinth.find_letter(MACGYVER_LETTER)
@@ -63,6 +67,9 @@ class Gui:
         
     def set_floor(self):
         floors = self.labyrinth.list_letter(FLOOR_LETTER)
+        macgyver = self.labyrinth.list_letter(MACGYVER_LETTER)
+        guardian = self.labyrinth.list_letter(GUARDIAN_LETTER)
+        floors += macgyver + guardian
         for floor in floors:
             floor_sprite = MySprite(self.floor_img)
             floor_sprite.rect.x = floor[1] * SPRITE_SIZE
@@ -73,14 +80,11 @@ class Gui:
         self.items = [Item("needle", "n", -1, -1), Item("ether", "e", -1, -1), Item("tube", "t", -1, -1)]
         self.items_sprites_list.add(self.needle_sprite, self.ether_sprite, self.tube_sprite)
         floor_squares = self.labyrinth.list_letter(FLOOR_LETTER)
-        items_positions = []
-        while len(items_positions) != len(self.items):
-            for item in self.items:
-                random_position = random.choice(floor_squares)
-                item.set_position(random_position[0], random_position[1])
-                self.labyrinth.replace_letter(item.y, item.x, item.letter)
-                new_item_position = (item.y, item.x)
-                if new_item_position not in items_positions : items_positions.append(new_item_position)
+        for item in self.items:
+            random_position = random.choice(floor_squares)
+            item.set_position(random_position[0], random_position[1])
+            self.labyrinth.replace_letter(item.y, item.x, item.letter)
+            floor_squares.remove(random_position)
         for sprite_id, sprite, in enumerate(self.items_sprites_list):
             item = self.items[sprite_id]
             sprite.rect.x = item.x * SPRITE_SIZE
@@ -104,7 +108,6 @@ class Gui:
                 if event.type == pygame.KEYDOWN:
                     #retourne un tuple de coordonnées
                     requested_position = self.macgyver.move_gui(event.key)
-                    print(self.macgyver.inventory)
 
                     if requested_position is not None:
                         requested_map_letter = self.labyrinth.retrieve_letter(requested_position[0], requested_position[1])
@@ -114,23 +117,27 @@ class Gui:
                             self.player_sprite.move(requested_position)
                             self.macgyver.set_position(requested_position[0], requested_position[1])
                         if requested_map_letter == NEEDLE_LETTER or requested_map_letter == ETHER_LETTER or requested_map_letter == TUBE_LETTER:
-                            item_name = ""
                             for item in self.items:
                                 if item.letter == requested_map_letter:
                                     item_name = item.name
-                            self.macgyver.loot_item(item_name)
+                                    self.macgyver.loot_item(item_name)
+                                    text_surface = self.font.render(item_name, True, (255, 255, 255))
+                                    self.window.blit(text_surface, dest=(WINDOW_SIDE + 20, 60 + (len(self.macgyver.inventory) * 30)))
+                                    for sprite in self.items_sprites_list:
+                                        if sprite.rect.x == item.x * SPRITE_SIZE and sprite.rect.y == item.y * SPRITE_SIZE:
+                                            sprite.kill()
+                                            break
                         elif requested_map_letter == GUARDIAN_LETTER:
-                            if self.macgyver.full_inventory(self.items_sprites_list) == True:
+                            if self.macgyver.is_inventory_full(self.items) == True:
                                 print("You slept the Guardian !")
                                 print("YOU WIN !")
-                            elif self.macgyver.full_inventory(self.items_sprites_list) == False:
+                                return
+                            elif self.macgyver.is_inventory_full(self.items) == False:
                                 print("The Guardian is still awake !")
                                 print("YOU LOSE !")
-                        self.wall_sprites_list.update()
-                        self.floor_sprites_list.update()
+                                return
                         self.items_sprites_list.update()
                         self.characters_sprites_list.update()
-                        self.labyrinth.display()
 
                 self.wall_sprites_list.draw(self.window)
                 self.floor_sprites_list.draw(self.window)
@@ -140,8 +147,4 @@ class Gui:
                 #Refresh window
                 pygame.display.flip()
                 self.clock.tick(60)
-            
-            
-
-
             
