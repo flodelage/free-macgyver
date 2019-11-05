@@ -20,7 +20,7 @@ class Gui:
         # set Labyrinth instance
         self.labyrinth = Labyrinth(MAP_FILE)
         # set game window
-        self.window = pygame.display.set_mode((WINDOW_SIDE + 200, WINDOW_SIDE))
+        self.window = pygame.display.set_mode((WINDOW_SIDE + 160, WINDOW_SIDE))
         # set images 
         self.macgyver_img = pygame.image.load(PLAYER_CHARACTER_IMG).convert_alpha()
         self.guardian_img = pygame.image.load(NON_PLAYER_CHARACTER_IMG).convert_alpha()
@@ -143,7 +143,7 @@ class Gui:
                 self.floor_sprites_list.draw(self.window)
                 self.items_sprites_list.draw(self.window)
                 self.characters_sprites_list.draw(self.window)
-                
+
                 #Refresh window
                 pygame.display.flip()
                 self.clock.tick(60)
