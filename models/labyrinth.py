@@ -2,8 +2,6 @@
 #! /usr/bin/env python3.7
 # coding: utf-8
 
-from constants import *
-
 class Labyrinth:
     """ Class which creates a map structure from a file """
     def __init__(self, map_file):

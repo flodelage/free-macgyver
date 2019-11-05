@@ -2,6 +2,8 @@
 #! /usr/bin/env python3.7
 # coding: utf-8
 
+import pygame
+from pygame.locals import *
 from pygame import K_RIGHT, K_LEFT, K_DOWN, K_UP
 
 class GamePersona:
