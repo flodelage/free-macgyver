@@ -37,7 +37,7 @@ class PlayerCharacter(GamePersona):
         Gets the event (str) and
         returns the requested coordinates (int, int) """
         while True:
-            event = input("Use Z, Q, S, or D to move your character: ")
+            event = input("Use z, q, s, or d to move your character:")
             if event == "q":
                 return (self.y, self.x -1)
             elif event == "d":
