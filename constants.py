@@ -18,16 +18,19 @@ WINDOW_SIDE = SPRITE_SIZE * SPRITES_QTY
 [Images params]
 """
 # sets wall image
-WALL_IMG = "data/resources/wall.png"
+WALL_IMG = "data/images/wall.png"
 # sets floor image
-FLOOR_IMG = "data/resources/floor.png"
+FLOOR_IMG = "data/images/floor.png"
 # sets player character image
-PLAYER_CHARACTER_IMG = "data/resources/macgyver.png"
-# # sets non player character image
-NON_PLAYER_CHARACTER_IMG = "data/resources/guard.png"
-NEEDLE_IMG = "data/resources/needle.png"
-ETHER_IMG = "data/resources/ether.png"
-TUBE_IMG = "data/resources/tube.png"
+PLAYER_CHARACTER_IMG = "data/images/macgyver.png"
+# sets non player character image
+NON_PLAYER_CHARACTER_IMG = "data/images/guard.png"
+NEEDLE_IMG = "data/images/needle.png"
+ETHER_IMG = "data/images/ether.png"
+TUBE_IMG = "data/images/tube.png"
+# end game images
+WIN_IMG = "data/images/youwin.png"
+LOSE_IMG = "data/images/youdied.png"
 
 """
 [Labyrinth params]

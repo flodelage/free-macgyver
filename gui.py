@@ -29,6 +29,8 @@ class Gui:
         self.needle_img = pygame.image.load(NEEDLE_IMG).convert_alpha()
         self.ether_img = pygame.image.load(ETHER_IMG).convert_alpha()
         self.tube_img = pygame.image.load(TUBE_IMG).convert_alpha()
+        self.win_img = pygame.image.load(WIN_IMG).convert_alpha()
+        self.lose_img = pygame.image.load(LOSE_IMG).convert_alpha()
         # set Sprite instances
         self.player_sprite = MySprite(self.macgyver_img)
         self.non_player_sprite = MySprite(self.guardian_img)
@@ -129,13 +131,18 @@ class Gui:
                                             break
                         elif requested_map_letter == GUARDIAN_LETTER:
                             if self.macgyver.is_inventory_full(self.items) == True:
-                                print("You slept the Guardian !")
-                                print("YOU WIN !")
-                                return
+                                self.wall_sprites_list.empty()
+                                self.floor_sprites_list.empty()
+                                self.items_sprites_list.empty()
+                                self.characters_sprites_list.empty()
+                                self.window.blit(self.win_img, (0, 0))
                             elif self.macgyver.is_inventory_full(self.items) == False:
-                                print("The Guardian is still awake !")
-                                print("YOU LOSE !")
-                                return
+                                self.wall_sprites_list.empty()
+                                self.floor_sprites_list.empty()
+                                self.items_sprites_list.empty()
+                                self.characters_sprites_list.empty()
+                                self.window.blit(self.lose_img, (0, 0))
+              
                         self.items_sprites_list.update()
                         self.characters_sprites_list.update()
 
