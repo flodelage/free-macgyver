@@ -52,6 +52,11 @@ class PlayerCharacter(GamePersona):
     def loot_item(self, item_name):
         self.inventory.append(item_name)
 
+    def display_inventory(self, inventory):
+        print("Inventory:")
+        for item in inventory:
+            print("".join(item))
+
     def is_inventory_full(self, items):
         if len(self.inventory) == len(items):
             return True

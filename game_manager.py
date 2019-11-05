@@ -43,7 +43,7 @@ class GameManager:
         """ Runs the game """
         run = True
         while run:
-            print(self.macgyver.inventory)
+            self.macgyver.display_inventory(self.macgyver.inventory)
             self.labyrinth.display()
             """ Displays map to user """
             position_before_movement = (self.macgyver.y, self.macgyver.x)
@@ -62,11 +62,11 @@ class GameManager:
                         self.macgyver.loot_item(item_name)
             elif requested_map_letter == GUARDIAN_LETTER:
                 if self.macgyver.is_inventory_full(self.items) == True:
-                    print("You slept the Guardian !")
-                    print("YOU WIN !")
+                    print("*** You slept the Guardian ! ***")
+                    print("*** YOU WIN ! ***")
                 elif self.macgyver.is_inventory_full(self.items) == False:
-                    print("The Guardian is still awake !")
-                    print("YOU LOSE !")
+                    print("*** The Guardian is still awake ! ***")
+                    print("*** YOU LOSE ! ***")
                 run = False
 
         
