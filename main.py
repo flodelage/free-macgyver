@@ -4,8 +4,8 @@
 
 import argparse
 
-from game_terminal_manager import TerminalGameManager
-from game_gui_manager import GuiGameManager
+from terminal_game_manager import TerminalGameManager
+from gui_game_manager import GuiGameManager
 
 
 def arg_parse():

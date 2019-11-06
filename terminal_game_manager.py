@@ -67,7 +67,7 @@ class TerminalGameManager:
             is not a wall letter: """
             if requested_map_letter != WALL_LETTER:
                 """ the letter present at the requested position
-                is replaced macgyver letter """
+                is replaced by macgyver letter """
                 self.labyrinth.replace_letter(requested_position[0],
                                               requested_position[1],
                                               MACGYVER_LETTER)
