@@ -1,11 +1,12 @@
 
-#! /usr/bin/env python3.7
+# ! /usr/bin/env python3.7
 # coding: utf-8
 
 import argparse
 
-from game_manager import GameManager
-from gui import Gui
+from game_terminal_manager import GameTerminalManager
+from game_gui_manager import GameGuiManager
+
 
 def arg_parse():
     parser = argparse.ArgumentParser()
@@ -13,23 +14,12 @@ def arg_parse():
     args = parser.parse_args()
     return args
 
+
 if __name__ == "__main__":
     args = arg_parse()
     if args.gui:
-        gui = Gui()
+        gui = GameGuiManager()
         gui.launch_game()
     else:
-        game = GameManager()
-        game.start()
-
-
-
-
-
-
-
-    
-
-
-
-
+        terminal = GameTerminalManager()
+        terminal.launch_game()

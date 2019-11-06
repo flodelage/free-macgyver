@@ -1,18 +1,22 @@
 
-#! /usr/bin/env python3.7
+# ! /usr/bin/env python3.7
 # coding: utf-8
 
-from constants import *
-
 import pygame
-from pygame.locals import *
+
+
+from constants import SPRITE_SIZE
+
 
 class MySprite(pygame.sprite.Sprite):
+    """ Class which inherit from pygame Sprite class """
     def __init__(self, image):
         super().__init__()
-        self.image = image 
+        self.image = image
         self.rect = self.image.get_rect()
 
     def move(self, new_pos):
-        self.rect.x = new_pos[1] * SPRITE_SIZE 
+        """ It defines image rect x and y position from
+        a position tuple (y, x)  """
+        self.rect.x = new_pos[1] * SPRITE_SIZE
         self.rect.y = new_pos[0] * SPRITE_SIZE
