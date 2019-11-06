@@ -4,6 +4,9 @@ This game is the third project of the OpenClassrooms' Python developer course.
 ## Requirements
 python 3.7+ and pygame 1.9.6
 
+## To launch the game
+
+
 ## Rules
 A guardian is blocking the labyrinth exit.
 Macgyver has to pick up a needle, a tube and some ether in order to put the guardian to sleep and run away from the labyrinth.
