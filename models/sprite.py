@@ -5,7 +5,7 @@
 import pygame
 
 
-from constants import SPRITE_SIZE
+from settings import SPRITE_SIZE
 
 
 class MySprite(pygame.sprite.Sprite):

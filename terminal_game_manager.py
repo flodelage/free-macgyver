@@ -7,7 +7,7 @@ import random
 from models.labyrinth import Labyrinth
 from models.game_personas import PlayerCharacter, NonPlayerCharacter
 from models.item import Item
-from constants import MAP_FILE, MACGYVER_LETTER, GUARDIAN_LETTER, WALL_LETTER, FLOOR_LETTER, NEEDLE_LETTER, ETHER_LETTER, TUBE_LETTER
+from settings import MAP_FILE, MACGYVER_LETTER, GUARDIAN_LETTER, WALL_LETTER, FLOOR_LETTER, NEEDLE_LETTER, ETHER_LETTER, TUBE_LETTER
 
 
 class TerminalGameManager:

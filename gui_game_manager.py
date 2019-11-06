@@ -11,7 +11,7 @@ from models.game_personas import PlayerCharacter
 from models.item import Item
 from models.sprite import MySprite
 from models.labyrinth import Labyrinth
-from constants import *
+from settings import *
 
 
 class GuiGameManager:
