@@ -1,1 +1,5 @@
-env/, .vscode/, __pycache__/, models/__pycache__/, models/__init__pyc, models/game_personas.pyc, models/labyrinth.pyc, models/items.pyc, constants.pyc, game_manager.pyc, gui.pyc
+__pycache__/
+.vscode/
+env/
+models/__pycache__/
+*.pyc

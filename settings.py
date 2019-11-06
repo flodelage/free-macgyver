@@ -34,7 +34,7 @@ LOSE_IMG = "data/images/youdied.png"
 [Labyrinth params]
 """
 """ sets map file """
-MAP_FILE = "data/labyrinth_sketch.txt"
+MAP_FILE = "data/map/labyrinth_sketch.txt"
 """ sets walls letter from map file """
 WALL_LETTER = "x"
 """ sets floors letter from map file """
