@@ -4,7 +4,7 @@ This game is the third project of the OpenClassrooms' Python developer course.
 ## Requirements
 python 3.7+ and pygame 1.9.6
 
-## To launch the game
+## Game launch
 
 
 ## Rules
