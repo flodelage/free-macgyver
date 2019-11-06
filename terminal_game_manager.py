@@ -33,12 +33,16 @@ class TerminalGameManager:
         self.items = [Item("needle", "n", -1, -1), Item("ether", "e", -1, -1),
                       Item("tube", "t", -1, -1)]
 
-        """ Set floors from map file letter, list of coordinates y x (int, int) """
+        """ Set floors from map file letter, list of
+        coordinates y x (int, int) """
         floor_squares = self.labyrinth.list_position_letter(FLOOR_LETTER)
-        """ For each object, a random position picken from the floors positions list will be chosen.
+        """ For each object, a random position picken from
+        the floors positions list will be chosen.
         This random position will be assigned to the item position.
         The labyrinth is updated: item letter added to the position
-        The position is removed from the list of available floors in order to no longer be selected and to prevent that two objects from being in the same position"""
+        The position is removed from the list of available floors in order to
+        no longer be selected and to prevent that two objects
+        from being in the same position"""
         for item in self.items:
             random_position = random.choice(floor_squares)
             item.set_position(random_position[0], random_position[1])
@@ -71,7 +75,8 @@ class TerminalGameManager:
                 self.labyrinth.replace_letter(requested_position[0],
                                               requested_position[1],
                                               MACGYVER_LETTER)
-                """ the old Macgyver position is replaced by a floor letter """
+                """ the old Macgyver position is replaced by
+                a floor letter """
                 self.labyrinth.replace_letter(position_before_movement[0],
                                               position_before_movement[1],
                                               FLOOR_LETTER)
@@ -79,7 +84,8 @@ class TerminalGameManager:
                 self.macgyver.set_position(requested_position[0],
                                            requested_position[1])
 
-            """ If the letter present at the requested position is one of items letter:
+            """ If the letter present at the requested position is
+            one of items letter:
             item name is added to Macgyver's inventory  """
             if requested_map_letter == NEEDLE_LETTER or requested_map_letter == ETHER_LETTER or requested_map_letter == TUBE_LETTER:
                 for item in self.items:

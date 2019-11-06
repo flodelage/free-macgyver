@@ -65,7 +65,8 @@ class GuiGameManager:
         self.characters_sprites_list.add(self.player_sprite, self.non_player_sprite)
 
     def set_walls(self):
-        """ set walls positions from map file and assign them to Sprite rect positions """
+        """ set walls positions from map file and assign
+        them to Sprite rect positions """
         walls = self.labyrinth.list_position_letter(WALL_LETTER)
         for wall in walls:
             wall_sprite = MySprite(self.wall_img)
@@ -75,8 +76,10 @@ class GuiGameManager:
             self.wall_sprites_list.add(wall_sprite)
         
     def set_floor(self):
-        """ set floors positions from map file and assign them to Sprite rect positions.
-        Macgyver and guardian images being transparent, we need to draw floors at their positions """
+        """ set floors positions from map file and assign
+        them to Sprite rect positions.
+        Macgyver and guardian images being transparent, we need to draw
+        floors at their positions """
         floors = self.labyrinth.list_position_letter(FLOOR_LETTER)
         macgyver = self.labyrinth.list_position_letter(MACGYVER_LETTER)
         guardian = self.labyrinth.list_position_letter(GUARDIAN_LETTER)
@@ -91,12 +94,16 @@ class GuiGameManager:
     def set_items(self):
         self.items = [Item("needle", "n", -1, -1), Item("ether", "e", -1, -1), Item("tube", "t", -1, -1)]
         self.items_sprites_list.add(self.needle_sprite, self.ether_sprite, self.tube_sprite)
-        """ Set floors from map file letter, list of coordinates y x (int, int) """
+        """ Set floors from map file letter, list of
+        coordinates y x (int, int) """
         floor_squares = self.labyrinth.list_position_letter(FLOOR_LETTER)
-        """ For each object, a random position picken from the floors positions list will be chosen.
+        """ For each object, a random position picken from
+        the floors positions list will be chosen.
         This random position will be assigned to the item position.
-        The labyrinth is updated: item letter added to the position
-        The position is removed from the list of available floors in order to no longer be selected and to prevent that two objects from being in the same position"""
+        The labyrinth is updated: item letter added to the position.
+        The position is removed from the list of available floors in order
+        to no longer be selected and to prevent that two objects from being
+        in the same position """
         for item in self.items:
             random_position = random.choice(floor_squares)
             item.set_position(random_position[0], random_position[1])
@@ -142,17 +149,22 @@ class GuiGameManager:
                             """ the letter present at the requested position
                             is replaced by macgyver letter """
                             self.labyrinth.replace_letter(requested_position[0], requested_position[1], MACGYVER_LETTER)
-                            """ the old Macgyver position is replaced by a floor letter """
+                            """ the old Macgyver position is replaced by
+                            a floor letter """
                             self.labyrinth.replace_letter(position_before_movement[0], position_before_movement[1], FLOOR_LETTER)
-                            """ Character Sprite instance is moved to the requested position """
+                            """ Character Sprite instance is moved
+                            to the requested position """
                             self.player_sprite.move(requested_position)
-                            """ the new macgyver coordinates position are redefined """
+                            """ the new macgyver coordinates position
+                            are redefined """
                             self.macgyver.set_position(requested_position[0], requested_position[1])
 
-                        """ If the letter present at the requested position is one of items letter:
+                        """ If the letter present at the requested position
+                        is one of items letter:
                         item name is added to Macgyver's inventory.
                         Item name is added to the inventory pygame text surface
-                        Item Sprite instance is deleted so that it is not redrawn """
+                        Item Sprite instance is deleted so that
+                        it is not redrawn """
                         if requested_map_letter == NEEDLE_LETTER or requested_map_letter == ETHER_LETTER or requested_map_letter == TUBE_LETTER:
                             for item in self.items:
                                 if item.letter == requested_map_letter:
