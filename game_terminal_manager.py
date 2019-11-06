@@ -10,7 +10,7 @@ from models.item import Item
 from constants import MAP_FILE, MACGYVER_LETTER, GUARDIAN_LETTER, WALL_LETTER, FLOOR_LETTER, NEEDLE_LETTER, ETHER_LETTER, TUBE_LETTER
 
 
-class GameTerminalManager:
+class TerminalGameManager:
     """ Class which manages the terminal version of the game """
     def __init__(self):
         """ Create Labyrinth instance """

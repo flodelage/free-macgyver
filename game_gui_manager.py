@@ -14,7 +14,7 @@ from models.labyrinth import Labyrinth
 from constants import *
 
 
-class GameGuiManager:
+class GuiGameManager:
     def __init__(self):
         """ initialize pygame """
         pygame.init()

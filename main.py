@@ -4,8 +4,8 @@
 
 import argparse
 
-from game_terminal_manager import GameTerminalManager
-from game_gui_manager import GameGuiManager
+from game_terminal_manager import TerminalGameManager
+from game_gui_manager import GuiGameManager
 
 
 def arg_parse():
@@ -18,8 +18,8 @@ def arg_parse():
 if __name__ == "__main__":
     args = arg_parse()
     if args.gui:
-        gui = GameGuiManager()
+        gui = GuiGameManager()
         gui.launch_game()
     else:
-        terminal = GameTerminalManager()
+        terminal = TerminalGameManager()
         terminal.launch_game()
