@@ -7,7 +7,8 @@ import random
 from models.labyrinth import Labyrinth
 from models.game_personas import PlayerCharacter, NonPlayerCharacter
 from models.item import Item
-from settings import MAP_FILE, MACGYVER_LETTER, GUARDIAN_LETTER, WALL_LETTER, FLOOR_LETTER, NEEDLE_LETTER, ETHER_LETTER, TUBE_LETTER
+from settings import MAP_FILE, MACGYVER_LETTER, GUARDIAN_LETTER, WALL_LETTER, \
+    FLOOR_LETTER, NEEDLE_LETTER, ETHER_LETTER, TUBE_LETTER
 
 
 class TerminalGameManager:
@@ -65,7 +66,9 @@ class TerminalGameManager:
             requested_position = self.macgyver.move()
             """ Store which letter is at the requested position
             and compare this letter to wall letter """
-            requested_map_letter = self.labyrinth.retrieve_letter(requested_position[0], requested_position[1])
+            requested_map_letter = \
+                self.labyrinth.retrieve_letter(requested_position[0],
+                                               requested_position[1])
 
             """ If the letter present at the requested position
             is not a wall letter: """
@@ -87,7 +90,9 @@ class TerminalGameManager:
             """ If the letter present at the requested position is
             one of items letter:
             item name is added to Macgyver's inventory  """
-            if requested_map_letter == NEEDLE_LETTER or requested_map_letter == ETHER_LETTER or requested_map_letter == TUBE_LETTER:
+            if requested_map_letter == NEEDLE_LETTER or \
+                requested_map_letter == ETHER_LETTER or \
+                    requested_map_letter == TUBE_LETTER:
                 for item in self.items:
                     if item.letter == requested_map_letter:
                         item_name = item.name
