@@ -94,9 +94,11 @@ class GuiGameManager:
             self.floor_sprites_list.add(floor_sprite)
 
     def set_items(self):
-        self.items = [Item("needle", "n", -1, -1), Item("ether", "e", -1, -1),
+        self.items = [Item("needle", "n", -1, -1),
+                      Item("ether", "e", -1, -1),
                       Item("tube", "t", -1, -1)]
-        self.items_sprites_list.add(self.needle_sprite, self.ether_sprite,
+        self.items_sprites_list.add(self.needle_sprite,
+                                    self.ether_sprite,
                                     self.tube_sprite)
         """ Set floors from map file letter, list of
         coordinates y x (int, int) """
