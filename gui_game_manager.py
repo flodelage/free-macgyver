@@ -130,7 +130,19 @@ class GuiGameManager:
         self.set_items()
         self.set_characters()
 
+        finished = False
+
         while True:
+            """ draw Sprite images to their positions """
+            self.wall_sprites_list.draw(self.window)
+            self.floor_sprites_list.draw(self.window)
+            self.items_sprites_list.draw(self.window)
+            self.characters_sprites_list.draw(self.window)
+
+            """ Refresh window """
+            pygame.display.flip()
+            self.clock.tick(60)
+
             """ initialize necessary movement variables """
             requested_position = None
             position_before_movement = (self.macgyver.y, self.macgyver.x) 
@@ -141,86 +153,81 @@ class GuiGameManager:
                     return
 
                 if event.type == pygame.KEYDOWN:
+                    if finished is True:
+                        return
                     """ The user wants to move Macgyver.
                     Store requested coordinates (int, int) """
                     requested_position = self.macgyver.move_gui(event.key)
 
-                    if requested_position is not None:
-                        """ Store which letter is at the requested position
-                        and compare this letter to wall letter """
-                        requested_map_letter = \
-                            self.labyrinth.retrieve_letter(requested_position[0], 
-                                                           requested_position[1])
-                        """ If the letter present at the requested position
-                        is not a wall letter: """
-                        if requested_map_letter != WALL_LETTER:
-                            """ the letter present at the requested position
-                            is replaced by macgyver letter """
-                            self.labyrinth.replace_letter(requested_position[0], 
-                                                          requested_position[1],
-                                                          MACGYVER_LETTER)
-                            """ the old Macgyver position is replaced by
-                            a floor letter """
-                            self.labyrinth.replace_letter(position_before_movement[0],
-                                                          position_before_movement[1],
-                                                          FLOOR_LETTER)
-                            """ Character Sprite instance is moved
-                            to the requested position """
-                            self.player_sprite.move(requested_position)
-                            """ the new macgyver coordinates position
-                            are redefined """
-                            self.macgyver.set_position(requested_position[0],
-                                                       requested_position[1])
+            if requested_position is not None:
+                """ Store which letter is at the requested position
+                and compare this letter to wall letter """
+                requested_map_letter = \
+                    self.labyrinth.retrieve_letter(requested_position[0], 
+                                                   requested_position[1])
+                """ If the letter present at the requested position
+                is not a wall letter: """
+                if requested_map_letter != WALL_LETTER:
+                    """ the letter present at the requested position
+                    is replaced by macgyver letter """
+                    self.labyrinth.replace_letter(requested_position[0], 
+                                                  requested_position[1],
+                                                  MACGYVER_LETTER)
+                    """ the old Macgyver position is replaced by
+                    a floor letter """
+                    self.labyrinth.replace_letter(position_before_movement[0],
+                                                  position_before_movement[1],
+                                                  FLOOR_LETTER)
+                    """ Character Sprite instance is moved
+                    to the requested position """
+                    self.player_sprite.move(requested_position)
+                    """ the new macgyver coordinates position
+                    are redefined """
+                    self.macgyver.set_position(requested_position[0],
+                                               requested_position[1])
 
-                        """ If the letter present at the requested position
-                        is one of items letter:
-                        item name is added to Macgyver's inventory.
-                        Item name is added to the inventory pygame text surface
-                        Item Sprite instance is deleted so that
-                        it is not redrawn """
-                        if requested_map_letter == NEEDLE_LETTER or \
-                            requested_map_letter == ETHER_LETTER or \
-                                requested_map_letter == TUBE_LETTER:
-                            for item in self.items:
-                                if item.letter == requested_map_letter:
-                                    item_name = item.name
-                                    self.macgyver.loot_item(item_name)
-                                    text_surface = self.font.render(item_name,
-                                                                    True,
-                                                                    (255, 255, 255))
-                                    self.window.blit(text_surface, dest=(WINDOW_SIDE + 20,
-                                                                         60 + (len(self.macgyver.inventory) * 30)))
-                                    for sprite in self.items_sprites_list:
-                                        if sprite.rect.x == item.x * SPRITE_SIZE and \
-                                            sprite.rect.y == item.y * SPRITE_SIZE:
-                                            sprite.kill()
-                        elif requested_map_letter == GUARDIAN_LETTER:
-                            """ If the letter present at the requested position
-                            is the Guardian letter:
-                            - User win if he looted all items
-                            - User lose if he looted all items
-                            All Sprite groups are emptied so that they are 
-                            no longer displayed and make room for 
-                            the end game message """
-                            if self.macgyver.is_inventory_full(self.items):
-                                self.wall_sprites_list.empty()
-                                self.floor_sprites_list.empty()
-                                self.items_sprites_list.empty()
-                                self.characters_sprites_list.empty()
-                                self.window.blit(self.win_img, (0, 0))
-                            elif not self.macgyver.is_inventory_full(self.items):
-                                self.wall_sprites_list.empty()
-                                self.floor_sprites_list.empty()
-                                self.items_sprites_list.empty()
-                                self.characters_sprites_list.empty()
-                                self.window.blit(self.lose_img, (0, 0))
-
-                """ draw Sprite images to their positions """
-                self.wall_sprites_list.draw(self.window)
-                self.floor_sprites_list.draw(self.window)
-                self.items_sprites_list.draw(self.window)
-                self.characters_sprites_list.draw(self.window)
-
-                """ Refresh window """
-                pygame.display.flip()
-                self.clock.tick(60)
+                """ If the letter present at the requested position
+                is one of items letter:
+                item name is added to Macgyver's inventory.
+                Item name is added to the inventory pygame text surface
+                Item Sprite instance is deleted so that
+                it is not redrawn """
+                if requested_map_letter == NEEDLE_LETTER or \
+                    requested_map_letter == ETHER_LETTER or \
+                        requested_map_letter == TUBE_LETTER:
+                    for item in self.items:
+                        if item.letter == requested_map_letter:
+                            item_name = item.name
+                            self.macgyver.loot_item(item_name)
+                            text_surface = self.font.render(item_name,
+                                                            True,
+                                                            (255, 255, 255))
+                            self.window.blit(text_surface,
+                                             dest=(WINDOW_SIDE + 20,
+                                             60 + (len(self.macgyver.inventory) * 30)))
+                            for sprite in self.items_sprites_list:
+                                if sprite.rect.x == item.x * SPRITE_SIZE and \
+                                    sprite.rect.y == item.y * SPRITE_SIZE:
+                                    sprite.kill()
+                elif requested_map_letter == GUARDIAN_LETTER:
+                    """ If the letter present at the requested position
+                    is the Guardian letter:
+                    - User win if he looted all items
+                    - User lose if he looted all items
+                    All Sprite groups are emptied so that they are
+                    no longer displayed and make room for
+                    the end game message """
+                    if self.macgyver.is_inventory_full(self.items):
+                        self.wall_sprites_list.empty()
+                        self.floor_sprites_list.empty()
+                        self.items_sprites_list.empty()
+                        self.characters_sprites_list.empty()
+                        self.window.blit(self.win_img, (0, 0))
+                        finished = True
+                    elif not self.macgyver.is_inventory_full(self.items):
+                        self.wall_sprites_list.empty()
+                        self.floor_sprites_list.empty()
+                        self.items_sprites_list.empty()
+                        self.characters_sprites_list.empty()
+                        self.window.blit(self.lose_img, (0, 0))
+                        finished = True
