@@ -1,16 +1,20 @@
 
-# ! /usr/bin/env python3.7
-# coding: utf-8
-
-
 class Labyrinth:
     """ Base class to create labyrinth in the game """
     def __init__(self, map_file):
-        """ It initializes map structure in nested lists.
+        """ It initializes map structure in nested list.
         Each line is a list into Labyrinth list"""
         with open(map_file) as file:
-            self.labyrinth_structure = \
-                [[letter for letter in line if letter != "\n"]for line in file]
+            self.labyrinth_structure = [
+                    [letter for letter in line if letter != "\n"]
+                    for line in file
+                ]
+
+    def display(self):
+        """ It displays the map by removing unnecessary
+        characters (, "" []) """
+        for line in self.labyrinth_structure:
+            print("".join(line))
 
     def find_letter_position(self, letter):
         """ It finds a letter (str) in the map nested list and return its
@@ -49,8 +53,3 @@ class Labyrinth:
         """ It replaces the letter at given coordinates by the letter given """
         self.labyrinth_structure[y][x] = letter
 
-    def display(self):
-        """ It displays the map by removing unnecessary
-        characters (, "" []) """
-        for line in self.labyrinth_structure:
-            print("".join(line))

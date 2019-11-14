@@ -1,56 +1,59 @@
 
-# ! /usr/bin/env python3.7
-# coding: utf-8
-
-
 """
 [Window params]
 """
-""" sets window size """
+""" set window size """
 SPRITE_SIZE = 30
 SPRITES_QTY = 15
 WINDOW_SIDE = SPRITE_SIZE * SPRITES_QTY
+""" set inventory window """
+INVENTORY_WIDTH = 160
+FONT_SIZE = 24
+FONT_COLOR = (250, 250, 250)
+PADDING_TOP = 30
+PADDING_LEFT = 20
+
 
 """
 [Images params]
 """
-""" sets wall image """
+""" set wall image """
 WALL_IMG = "data/images/wall.png"
-""" sets floor image """
+""" set floor image """
 FLOOR_IMG = "data/images/floor.png"
-""" sets player character image """
+""" set player character image """
 PLAYER_IMG = "data/images/macgyver.png"
-""" sets non player character image """
+""" set non player character image """
 NON_PLAYER_IMG = "data/images/guard.png"
-""" sets items images """
+""" set items images """
 NEEDLE_IMG = "data/images/needle.png"
 ETHER_IMG = "data/images/ether.png"
 TUBE_IMG = "data/images/tube.png"
-""" sets end game images """
+""" set end game images """
 WIN_IMG = "data/images/youwin.png"
 LOSE_IMG = "data/images/youdied.png"
 
 """
 [Labyrinth params]
 """
-""" sets map file """
+""" set map file """
 MAP_FILE = "data/map/labyrinth_sketch.txt"
-""" sets walls letter from map file """
+""" set walls letter from map file """
 WALL_LETTER = "x"
-""" sets floors letter from map file """
+""" set floors letter from map file """
 FLOOR_LETTER = " "
 
 """
 [Personas params]
 """
-""" sets characters letters """
+""" set characters letters """
 MACGYVER_LETTER = "m"
 GUARDIAN_LETTER = "g"
 
 """
 [Items params]
 """
-""" sets items letter """
+""" set items letter """
 NEEDLE_LETTER = "n"
 ETHER_LETTER = "e"
 TUBE_LETTER = "t"

@@ -1,8 +1,4 @@
 
-# ! /usr/bin/env python3.7
-# coding: utf-8
-
-
 import pygame
 
 import random
@@ -20,8 +16,10 @@ class GuiGameManager:
         pygame.init()
         """ set Labyrinth instance """
         self.labyrinth = Labyrinth(MAP_FILE)
+
         """ set game window """
-        self.window = pygame.display.set_mode((WINDOW_SIDE + 160, WINDOW_SIDE))
+        self.window = pygame.display.set_mode((WINDOW_SIDE + INVENTORY_WIDTH,
+                                               WINDOW_SIDE))
         """ set attributes images """
         self.macgyver_img = pygame.image.load(PLAYER_IMG).convert_alpha()
         self.guardian_img = pygame.image.load(NON_PLAYER_IMG).convert_alpha()
@@ -45,10 +43,13 @@ class GuiGameManager:
         self.items_sprites_list = pygame.sprite.Group()
         """ set pygame time Clock() """
         self.clock = pygame.time.Clock()
-        """ set pygame text surface for inventory information  """
-        self.font = pygame.font.Font(pygame.font.get_default_font(), 24)
-        text_surface = self.font.render("Inventory:", True, (255, 255, 255))
-        self.window.blit(text_surface, dest=(WINDOW_SIDE + 20, 30))
+        """ set pygame text surface for inventory information: """
+        """ set font size """
+        self.font = pygame.font.Font(pygame.font.get_default_font(), FONT_SIZE)
+        """ set inventory string area to display """
+        text_area = self.font.render("Inventory:", True, FONT_COLOR)
+        """ display text_area """
+        self.window.blit(text_area, dest=(WINDOW_SIDE + PADDING_LEFT, PADDING_TOP))
 
     def set_characters(self):
         """ set Player and Non Player Character positions from map file """
@@ -188,7 +189,7 @@ class GuiGameManager:
                 """ If the letter present at the requested position
                 is one of items letter:
                 item name is added to Macgyver's inventory.
-                Item name is added to the inventory pygame text surface
+                Item name is displayed
                 Item Sprite instance is deleted so that
                 it is not redrawn """
                 if requested_map_letter == NEEDLE_LETTER or \
@@ -200,10 +201,10 @@ class GuiGameManager:
                             self.macgyver.loot_item(item_name)
                             text_surface = self.font.render(item_name,
                                                             True,
-                                                            (255, 255, 255))
+                                                            (FONT_COLOR))
                             self.window.blit(text_surface,
-                                             dest=(WINDOW_SIDE + 20,
-                                                   60 + (len(self.macgyver.inventory) * 30)))
+                                             dest=(WINDOW_SIDE + PADDING_LEFT,
+                                                   PADDING_TOP + (len(self.macgyver.inventory) * PADDING_TOP)))
                             for sprite in self.items_sprites_list:
                                 if sprite.rect.x == item.x * SPRITE_SIZE and \
                                     sprite.rect.y == item.y * SPRITE_SIZE:

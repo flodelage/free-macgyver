@@ -1,8 +1,4 @@
 
-# ! /usr/bin/env python3.7
-# coding: utf-8
-
-
 class Item:
     """ Base class for all items in the game """
     def __init__(self, name, letter, y, x):
