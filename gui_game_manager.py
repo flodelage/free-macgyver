@@ -22,7 +22,7 @@ class GuiGameManager:
         self.labyrinth = Labyrinth(MAP_FILE)
         """ set game window """
         self.window = pygame.display.set_mode((WINDOW_SIDE + 160, WINDOW_SIDE))
-        """ set attributes images """ 
+        """ set attributes images """
         self.macgyver_img = pygame.image.load(PLAYER_IMG).convert_alpha()
         self.guardian_img = pygame.image.load(NON_PLAYER_IMG).convert_alpha()
         self.wall_img = pygame.image.load(WALL_IMG).convert_alpha()
@@ -76,7 +76,7 @@ class GuiGameManager:
             wall_sprite.rect.y = wall[0] * SPRITE_SIZE
             """ Then add them into sprite group """
             self.wall_sprites_list.add(wall_sprite)
-        
+
     def set_floor(self):
         """ set floors positions from map file and assign
         them to Sprite rect positions.
@@ -130,7 +130,7 @@ class GuiGameManager:
         self.set_items()
         self.set_characters()
 
-        finished = False
+        game_over = False
 
         while True:
             """ draw Sprite images to their positions """
@@ -145,7 +145,7 @@ class GuiGameManager:
 
             """ initialize necessary movement variables """
             requested_position = None
-            position_before_movement = (self.macgyver.y, self.macgyver.x) 
+            position_before_movement = (self.macgyver.y, self.macgyver.x)
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -153,8 +153,7 @@ class GuiGameManager:
                     return
 
                 if event.type == pygame.KEYDOWN:
-                    if finished is True:
-                        return
+                    if game_over is True : return
                     """ The user wants to move Macgyver.
                     Store requested coordinates (int, int) """
                     requested_position = self.macgyver.move_gui(event.key)
@@ -163,14 +162,14 @@ class GuiGameManager:
                 """ Store which letter is at the requested position
                 and compare this letter to wall letter """
                 requested_map_letter = \
-                    self.labyrinth.retrieve_letter(requested_position[0], 
+                    self.labyrinth.retrieve_letter(requested_position[0],
                                                    requested_position[1])
                 """ If the letter present at the requested position
                 is not a wall letter: """
                 if requested_map_letter != WALL_LETTER:
                     """ the letter present at the requested position
                     is replaced by macgyver letter """
-                    self.labyrinth.replace_letter(requested_position[0], 
+                    self.labyrinth.replace_letter(requested_position[0],
                                                   requested_position[1],
                                                   MACGYVER_LETTER)
                     """ the old Macgyver position is replaced by
@@ -180,7 +179,7 @@ class GuiGameManager:
                                                   FLOOR_LETTER)
                     """ Character Sprite instance is moved
                     to the requested position """
-                    self.player_sprite.move(requested_position)
+                    self.player_sprite.move_sprite(requested_position)
                     """ the new macgyver coordinates position
                     are redefined """
                     self.macgyver.set_position(requested_position[0],
@@ -204,11 +203,11 @@ class GuiGameManager:
                                                             (255, 255, 255))
                             self.window.blit(text_surface,
                                              dest=(WINDOW_SIDE + 20,
-                                             60 + (len(self.macgyver.inventory) * 30)))
+                                                   60 + (len(self.macgyver.inventory) * 30)))
                             for sprite in self.items_sprites_list:
                                 if sprite.rect.x == item.x * SPRITE_SIZE and \
                                     sprite.rect.y == item.y * SPRITE_SIZE:
-                                    sprite.kill()
+                                        sprite.kill()
                 elif requested_map_letter == GUARDIAN_LETTER:
                     """ If the letter present at the requested position
                     is the Guardian letter:
@@ -216,18 +215,18 @@ class GuiGameManager:
                     - User lose if he looted all items
                     All Sprite groups are emptied so that they are
                     no longer displayed and make room for
-                    the end game message """
+                    the end game image """
                     if self.macgyver.is_inventory_full(self.items):
                         self.wall_sprites_list.empty()
                         self.floor_sprites_list.empty()
                         self.items_sprites_list.empty()
                         self.characters_sprites_list.empty()
                         self.window.blit(self.win_img, (0, 0))
-                        finished = True
+                        game_over = True
                     elif not self.macgyver.is_inventory_full(self.items):
                         self.wall_sprites_list.empty()
                         self.floor_sprites_list.empty()
                         self.items_sprites_list.empty()
                         self.characters_sprites_list.empty()
                         self.window.blit(self.lose_img, (0, 0))
-                        finished = True
+                        game_over = True
