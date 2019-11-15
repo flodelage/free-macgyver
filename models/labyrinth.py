@@ -52,4 +52,3 @@ class Labyrinth:
     def replace_letter(self, y, x, letter):
         """ It replaces the letter at given coordinates by the letter given """
         self.labyrinth_structure[y][x] = letter
-

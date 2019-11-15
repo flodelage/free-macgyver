@@ -49,7 +49,8 @@ class GuiGameManager:
         """ set inventory string area to display """
         text_area = self.font.render("Inventory:", True, FONT_COLOR)
         """ display text_area """
-        self.window.blit(text_area, dest=(WINDOW_SIDE + PADDING_LEFT, PADDING_TOP))
+        self.window.blit(text_area, dest=(WINDOW_SIDE + PADDING_LEFT,
+                                          PADDING_TOP))
 
     def set_characters(self):
         """ set Player and Non Player Character positions from map file """
@@ -154,7 +155,8 @@ class GuiGameManager:
                     return
 
                 if event.type == pygame.KEYDOWN:
-                    if game_over is True : return
+                    if game_over is True:
+                        return
                     """ The user wants to move Macgyver.
                     Store requested coordinates (int, int) """
                     requested_position = self.macgyver.move_gui(event.key)
@@ -207,8 +209,8 @@ class GuiGameManager:
                                                    PADDING_TOP + (len(self.macgyver.inventory) * PADDING_TOP)))
                             for sprite in self.items_sprites_list:
                                 if sprite.rect.x == item.x * SPRITE_SIZE and \
-                                    sprite.rect.y == item.y * SPRITE_SIZE:
-                                        sprite.kill()
+                                   sprite.rect.y == item.y * SPRITE_SIZE:
+                                    sprite.kill()
                 elif requested_map_letter == GUARDIAN_LETTER:
                     """ If the letter present at the requested position
                     is the Guardian letter:
